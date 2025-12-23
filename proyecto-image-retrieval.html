@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda de Imágenes con IA Multimodal | Santiago Caffaro</title>
+    <meta name="description" content="Sistema de recuperación de imágenes basado en IA usando CLIP, FAISS y LLMs para búsquedas semánticas avanzadas">
+    <link rel="stylesheet" href="proyecto-image-retrieval.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="portfolio.html" class="nav-back">← Volver al Portfolio</a>
+            <a href="public/TPI_IA_2025.pdf" class="nav-pdf" target="_blank">Ver Documentación PDF</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-tag">Proyecto de Inteligencia Artificial • 2025</div>
+            <h1 class="hero-title">Búsqueda de Imágenes Basada en Texto mediante Embeddings Multimodales</h1>
+            <p class="hero-subtitle">Sistema avanzado de recuperación de imágenes que combina CLIP, FAISS y modelos de lenguaje para interpretar consultas complejas con negaciones y múltiples atributos</p>
+            <div class="hero-badges">
+                <span class="badge">CLIP (ViT-B/32)</span>
+                <span class="badge">FAISS</span>
+                <span class="badge">TinyLlama</span>
+                <span class="badge">Pascal VOC 2012</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="section overview">
+        <div class="container">
+            <h2 class="section-title">Resumen del Proyecto</h2>
+            <div class="overview-grid">
+                <div class="overview-card">
+
+                    <h3>Objetivo</h3>
+                    <p>Mejorar la precisión semántica en búsqueda de imágenes, especialmente en consultas con negaciones ("auto no rojo"), atributos combinados y estructuras naturales del lenguaje.</p>
+                </div>
+                <div class="overview-card">
+
+                    <h3>Enfoque</h3>
+                    <p>Comparación entre un baseline de similitud semántica directa (CLIP + FAISS) y un sistema avanzado con reformulación semántica mediante LLMs y reranking.</p>
+                </div>
+                <div class="overview-card">
+
+                    <h3>Resultados</h3>
+                    <p>Mejoras de hasta +30% en Precision y Recall en consultas complejas teniendo en cuenta el dataset utilizado. Casos destacados: "auto no rojo" (AP: 0.00 → 0.16), "barco no rojo" (AP: 0.01 → 0.90).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section class="section architecture">
+        <div class="container">
+            <h2 class="section-title">Arquitectura del Sistema</h2>
+            <div class="architecture-diagram">
+                <div class="arch-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Entrada de Consulta</h3>
+                        <p>El usuario ingresa una consulta en lenguaje natural</p>
+                        <code>"un auto no rojo"</code>
+                    </div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Traducción</h3>
+                        <p>Helsinki-NLP traduce al inglés</p>
+                        <code>"a car not red"</code>
+                    </div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Reformulación Semántica</h3>
+                        <p>TinyLlama extrae términos</p>
+                        <code>main: "car"<br>negative: "red"</code>
+                    </div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Embeddings CLIP</h3>
+                        <p>Generación de vectores multimodales</p>
+                        <code>ViT-B/32</code>
+                    </div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Búsqueda FAISS</h3>
+                        <p>Indexación y búsqueda vectorial eficiente</p>
+                        <code>Top-K resultados</code>
+                    </div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h3>Reranking</h3>
+                        <p>Filtrado semántico de negativos</p>
+                        <code>Resultados refinados</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technologies Section -->
+    <section class="section technologies">
+        <div class="container">
+            <h2 class="section-title">Stack Tecnológico</h2>
+            <div class="tech-grid">
+                <div class="tech-card">
+
+                    <h3>CLIP (ViT-B/32)</h3>
+                    <p>Modelo multimodal de OpenAI para generación de embeddings de imágenes y texto en un espacio vectorial compartido</p>
+                    <div class="tech-tags">
+                        <span>Vision Transformer</span>
+                        <span>Multimodal</span>
+                    </div>
+                </div>
+                <div class="tech-card">
+
+                    <h3>FAISS</h3>
+                    <p>Biblioteca de Facebook AI para búsqueda eficiente de similitud vectorial en grandes conjuntos de datos</p>
+                    <div class="tech-tags">
+                        <span>Vector Search</span>
+                        <span>Indexación</span>
+                    </div>
+                </div>
+                <div class="tech-card">
+
+                    <h3>TinyLlama</h3>
+                    <p>Modelo de lenguaje para reformulación semántica de consultas, extrayendo términos principales y negativos</p>
+                    <div class="tech-tags">
+                        <span>LLM</span>
+                        <span>Reformulación</span>
+                    </div>
+                </div>
+                <div class="tech-card">
+
+                    <h3>Helsinki-NLP</h3>
+                    <p>Sistema de traducción automática para normalizar consultas al inglés antes del procesamiento</p>
+                    <div class="tech-tags">
+                        <span>Translation</span>
+                        <span>NLP</span>
+                    </div>
+                </div>
+                <div class="tech-card">
+
+                    <h3>Python Ecosystem</h3>
+                    <p>NumPy, Pandas, scikit-learn para procesamiento de datos, clustering (K-Means, PCA) y métricas de evaluación</p>
+                    <div class="tech-tags">
+                        <span>Data Science</span>
+                        <span>ML</span>
+                    </div>
+                </div>
+                <div class="tech-card">
+
+                    <h3>Pascal VOC 2012</h3>
+                    <p>Dataset estándar con 20 clases de objetos para evaluación de sistemas de visión por computadora</p>
+                    <div class="tech-tags">
+                        <span>Dataset</span>
+                        <span>Benchmark</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="section results">
+        <div class="container">
+            <h2 class="section-title">Resultados </h2>
+
+            <div class="key-insights">
+                <h3>Conclusiones Clave</h3>
+                <div class="insights-grid">
+                    <div class="insight-card">
+
+                        <p>La integración de LLMs con modelos multimodales reduce significativamente los falsos positivos</p>
+                    </div>
+                    <div class="insight-card">
+
+                        <p>El reranking semántico es crucial para consultas con negaciones y atributos combinados</p>
+                    </div>
+                    <div class="insight-card">
+
+                        <p>El sistema mantiene rendimiento óptimo en consultas simples mientras mejora dramáticamente en casos complejos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Section -->
+    <section class="section code-section">
+        <div class="container">
+            <h2 class="section-title">Implementación Técnica</h2>
+            
+            <div class="code-blocks">
+                <div class="code-block">
+                    <h3>Generación de Embeddings con CLIP</h3>
+                    <pre><code>import clip
+import torch
+
+# Cargar modelo CLIP
+device = "cuda" if torch.cuda.is_available() else "cpu"
+model, preprocess = clip.load("ViT-B/32", device=device)
+
+# Generar embeddings de imagen
+image = preprocess(Image.open("image.jpg")).unsqueeze(0).to(device)
+with torch.no_grad():
+    image_features = model.encode_image(image)
+    image_features /= image_features.norm(dim=-1, keepdim=True)
+
+# Generar embeddings de texto
+text = clip.tokenize(["a car not red"]).to(device)
+with torch.no_grad():
+    text_features = model.encode_text(text)
+    text_features /= text_features.norm(dim=-1, keepdim=True)</code></pre>
+                </div>
+
+                <div class="code-block">
+                    <h3>Indexación y Búsqueda con FAISS</h3>
+                    <pre><code>import faiss
+import numpy as np
+
+# Crear índice FAISS
+dimension = 512  # Dimensión de embeddings CLIP
+index = faiss.IndexFlatIP(dimension)  # Inner Product para similitud coseno
+
+# Agregar embeddings al índice
+index.add(image_embeddings.astype('float32'))
+
+# Búsqueda de top-k imágenes similares
+k = 10
+distances, indices = index.search(query_embedding.astype('float32'), k)</code></pre>
+                </div>
+
+                <div class="code-block">
+                    <h3>Reformulación Semántica con LLM</h3>
+                    <pre><code>from transformers import AutoTokenizer, AutoModelForCausalLM
+
+# Cargar TinyLlama
+tokenizer = AutoTokenizer.from_pretrained("TinyLlama/TinyLlama-1.1B-Chat-v1.0")
+model = AutoModelForCausalLM.from_pretrained("TinyLlama/TinyLlama-1.1B-Chat-v1.0")
+
+# Reformular consulta
+prompt = f"""Extract main term and negative term from: "{query}"
+Format: main_term: X, negative_term: Y"""
+
+inputs = tokenizer(prompt, return_tensors="pt")
+outputs = model.generate(**inputs, max_length=100)
+reformulated = tokenizer.decode(outputs[0], skip_special_tokens=True)</code></pre>
+                </div>
+
+                <div class="code-block">
+                    <h3>Reranking Semántico</h3>
+                    <pre><code>def semantic_reranking(results, main_term, negative_term, model):
+    """Filtra resultados usando términos reformulados"""
+    
+    # Generar embeddings para términos
+    main_emb = get_text_embedding(main_term, model)
+    neg_emb = get_text_embedding(negative_term, model)
+    
+    reranked = []
+    for img_path, score in results:
+        img_emb = get_image_embedding(img_path, model)
+        
+        # Calcular similitudes
+        main_sim = cosine_similarity(img_emb, main_emb)
+        neg_sim = cosine_similarity(img_emb, neg_emb)
+        
+        # Filtrar si tiene alta similitud con término negativo
+        if neg_sim < threshold:
+            reranked.append((img_path, main_sim))
+    
+    return sorted(reranked, key=lambda x: x[1], reverse=True)</code></pre>
+                </div>
+            </div>
+
+            <div class="notebook-link">
+                <h3>Código Completo</h3>
+                <p>El notebook completo con todos los experimentos, visualizaciones y análisis está disponible:</p>
+                <a href="public/tpi-ia-2025.ipynb" class="btn-primary" download>Descargar Notebook Jupyter (.ipynb)</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Section -->
+    <section class="section documentation">
+        <div class="container">
+            <h2 class="section-title">Documentación Completa</h2>
+            <div class="doc-card">
+
+                <div class="doc-content">
+                    <h3>Informe Técnico Completo</h3>
+                    <p>Documento PDF con análisis detallado de metodología, experimentos, resultados y conclusiones del proyecto.</p>
+                    <ul class="doc-includes">
+                        <li>Fundamentación teórica de embeddings multimodales</li>
+                        <li>Descripción detallada de la arquitectura del sistema</li>
+                        <li>Análisis comparativo de métricas (AP, Precision, Recall, F1)</li>
+                        <li>Visualizaciones de clustering y distribución de datos</li>
+                        <li>Casos de estudio y ejemplos de consultas</li>
+                        <li>Conclusiones y trabajo futuro</li>
+                    </ul>
+                    <a href="public/TPI_IA_2025.pdf" class="btn-primary" target="_blank">Abrir Documentación PDF</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p><strong></strong>Desarrollado por:</strong></p>
+            <p>Bordino Coniglio, Tobías Martín</p>
+            <p>Caffaro, Santiago</p>
+            <p>Moreno, Tomás Agustín</p>
+            <p>Suarez, Emiliano Fabricio</p>
+            <p style="margin-top: 1rem;">Proyecto de Inteligencia Artificial - Búsqueda de Imágenes Multimodal • 2025</p>
+            <a href="portfolio.html" class="footer-link">← Volver al Portfolio</a>
+        </div>
+    </footer>
+
+    <script src="proyecto-image-retrieval.js"></script>
+</body>
+</html>

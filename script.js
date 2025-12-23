@@ -208,3 +208,56 @@ window.removeEventListener('scroll', handleNavbarScroll);
 
 window.addEventListener('scroll', debouncedNavUpdate);
 window.addEventListener('scroll', debouncedNavbarScroll);
+
+// ==========================================
+// Image Lightbox for Certificate Badges
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    // Create lightbox element
+    const lightbox = document.createElement('div');
+    lightbox.className = 'lightbox';
+    lightbox.innerHTML = `
+        <span class="lightbox-close">&times;</span>
+        <div class="lightbox-content">
+            <img src="" alt="">
+        </div>
+    `;
+    document.body.appendChild(lightbox);
+
+    const lightboxImg = lightbox.querySelector('.lightbox-content img');
+    const closeBtn = lightbox.querySelector('.lightbox-close');
+
+    // Add click event to all certificate badge images
+    const certificateBadges = document.querySelectorAll('.certificate-icon img');
+    certificateBadges.forEach(badge => {
+        badge.addEventListener('click', () => {
+            lightboxImg.src = badge.src;
+            lightboxImg.alt = badge.alt;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        });
+    });
+
+    // Close lightbox when clicking the close button
+    closeBtn.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = 'auto'; // Re-enable scrolling
+    });
+
+    // Close lightbox when clicking outside the image
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Close lightbox with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+});
+

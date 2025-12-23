@@ -624,8 +624,8 @@ body {
 }
 
 .certificate-icon {
-    width: 64px;
-    height: 64px;
+    width: 80px;
+    height: 80px;
     margin: 0 auto var(--spacing-sm);
     display: flex;
     align-items: center;
@@ -633,6 +633,13 @@ body {
     background: linear-gradient(135deg, var(--color-blue-accent), var(--color-navy));
     border-radius: 50%;
     transition: transform var(--transition-base);
+    overflow: hidden;
+}
+
+/* Remove background for image badges */
+.certificate-icon:has(img) {
+    background: none;
+    border-radius: 8px;
 }
 
 .certificate-icon svg {
@@ -642,6 +649,12 @@ body {
 
 .certificate-card:hover .certificate-icon {
     transform: scale(1.1) rotate(5deg);
+}
+
+/* Don't rotate image badges on hover */
+.certificate-card:hover .certificate-icon:has(img) {
+    transform: scale(1.1);
+    rotate: 0deg;
 }
 
 .certificate-card h3 {
@@ -676,6 +689,95 @@ body {
     color: var(--color-navy);
     text-decoration: underline;
 }
+
+/* Certificate badge images */
+.certificate-icon img {
+    cursor: pointer;
+    transition: transform var(--transition-base);
+    outline: none;
+    border: none;
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.certificate-icon img:hover {
+    transform: scale(1.05);
+}
+
+/* ==========================================
+   Image Lightbox/Modal
+   ========================================== */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    animation: zoomIn 0.3s ease;
+}
+
+.lightbox-content img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    color: var(--color-white);
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+    z-index: 10000;
+}
+
+.lightbox-close:hover {
+    color: var(--color-gray-400);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
 
 /* ==========================================
    Contact Section
