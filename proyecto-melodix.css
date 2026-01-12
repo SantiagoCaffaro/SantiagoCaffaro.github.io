@@ -215,6 +215,14 @@ body {
     border: 1px solid rgba(133, 10, 10, 0.2);
 }
 
+.hero-logo {
+    width: clamp(80px, 15vw, 150px);
+    height: auto;
+    margin: var(--spacing-md) auto;
+    display: block;
+}
+
+
 .hero-title {
     font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 800;
@@ -839,7 +847,7 @@ body {
     font-family: var(--font-mono);
     font-size: 0.875rem;
     line-height: 1.6;
-    color: #a5b4fc;
+    color: black;
 }
 
 .notebook-link {
@@ -1348,10 +1356,7 @@ body {
     font-size: 1.75rem;
     font-weight: 700;
     margin-bottom: var(--spacing-xl);
-    background: linear-gradient(135deg, #f9fafb 0%, #c7d2fe 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #850A0A;
 }
 
 .team-grid {
