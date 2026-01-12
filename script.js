@@ -2,11 +2,11 @@
 // Smooth Scrolling & Navigation
 // ==========================================
 
-// Add active class to navigation links based on scroll position
+// Add active class to dock items based on scroll position
 const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-link');
+const dockItems = document.querySelectorAll('.dock-item');
 
-function updateActiveNavLink() {
+function updateActiveDockItem() {
     const scrollPosition = window.scrollY + 100;
 
     sections.forEach(section => {
@@ -15,45 +15,30 @@ function updateActiveNavLink() {
         const sectionId = section.getAttribute('id');
 
         if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${sectionId}`) {
-                    link.classList.add('active');
+            dockItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === `#${sectionId}`) {
+                    item.classList.add('active');
                 }
             });
         }
     });
 }
 
-window.addEventListener('scroll', updateActiveNavLink);
-window.addEventListener('load', updateActiveNavLink);
+window.addEventListener('scroll', updateActiveDockItem);
+window.addEventListener('load', updateActiveDockItem);
 
 // ==========================================
-// Navbar Scroll Effect
+// Smooth Scroll for Dock Items
 // ==========================================
-const navbar = document.getElementById('navbar');
-
-function handleNavbarScroll() {
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-}
-
-window.addEventListener('scroll', handleNavbarScroll);
-
-// ==========================================
-// Smooth Scroll for Navigation Links
-// ==========================================
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
+dockItems.forEach(item => {
+    item.addEventListener('click', (e) => {
         e.preventDefault();
-        const targetId = link.getAttribute('href');
+        const targetId = item.getAttribute('href');
         const targetSection = document.querySelector(targetId);
 
         if (targetSection) {
-            const offsetTop = targetSection.offsetTop - 80; // Account for fixed navbar
+            const offsetTop = targetSection.offsetTop;
             window.scrollTo({
                 top: offsetTop,
                 behavior: 'smooth'
@@ -200,14 +185,11 @@ function debounce(func, wait) {
 }
 
 // Apply debounce to scroll-heavy functions
-const debouncedNavUpdate = debounce(updateActiveNavLink, 100);
-const debouncedNavbarScroll = debounce(handleNavbarScroll, 100);
+const debouncedDockUpdate = debounce(updateActiveDockItem, 100);
 
-window.removeEventListener('scroll', updateActiveNavLink);
-window.removeEventListener('scroll', handleNavbarScroll);
+window.removeEventListener('scroll', updateActiveDockItem);
 
-window.addEventListener('scroll', debouncedNavUpdate);
-window.addEventListener('scroll', debouncedNavbarScroll);
+window.addEventListener('scroll', debouncedDockUpdate);
 
 // ==========================================
 // Image Lightbox for Certificate Badges
