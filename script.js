@@ -243,3 +243,48 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// ==========================================
+// Project Modal (iframe)
+// ==========================================
+function openProjectModal(url) {
+    const modal = document.getElementById('project-modal');
+    const iframe = document.getElementById('project-modal-iframe');
+    const spinner = modal.querySelector('.project-modal-spinner');
+
+    // Show spinner, reset iframe
+    spinner.classList.remove('hidden');
+    iframe.src = '';
+
+    // Show modal
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    // Set iframe source
+    iframe.src = url;
+
+    // Hide spinner when iframe loads
+    iframe.onload = function () {
+        spinner.classList.add('hidden');
+    };
+}
+
+function closeProjectModal() {
+    const modal = document.getElementById('project-modal');
+    const iframe = document.getElementById('project-modal-iframe');
+
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+
+    // Clear iframe to stop any media/scripts
+    iframe.src = '';
+}
+
+// Close project modal with Escape key
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+        const modal = document.getElementById('project-modal');
+        if (modal && modal.classList.contains('active')) {
+            closeProjectModal();
+        }
+    }
+});
